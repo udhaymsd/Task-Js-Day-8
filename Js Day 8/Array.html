@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Make a GET request to retrieve the country data
+fetch("https://restcountries.com/v3.1/all")
+  .then((response) => response.json())
+  .then((data) => {
+    // a. Get all the countries from the Asia continent/region using the Filter function
+    const asiaCountries = data.filter((country) => country.region === "Asia");
+    console.log("Asia Countries:", asiaCountries);
+
+    // b. Get all the countries with a population of less than 2 lakhs using Filter function
+    const countriesWithLessPopulation = data.filter(
+      (country) => country.population < 200000
+    );
+    console.log("Countries with population less than 2 lakhs:", countriesWithLessPopulation);
+
+    // c. Print the following details name, capital, flag using forEach function
+    data.forEach((country) => {
+      console.log("Name:", country.name.common);
+      console.log("Capital:", country.capital);
+      console.log("Flag:", country.flags.png);
+    });
+
+    // d. Print the total population of countries using reduce function
+    const totalPopulation = data.reduce(
+      (accumulator, country) => accumulator + country.population,
+      0
+    );
+    console.log("Total Population:", totalPopulation);
+
+    // Print the country which uses US Dollars as currency
+    const countryUsingUSD = data.find((country) =>
+      country.currencies.hasOwnProperty("USD")
+    );
+    console.log("Country using US Dollars:", countryUsingUSD);
+  })
+  .catch((error) => {
+    console.log("Error occurred while fetching country data:", error);
+  });
+
+    </script>
+</body>
+</html>
